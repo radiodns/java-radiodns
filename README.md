@@ -32,7 +32,7 @@ Use the methods on RadioDNS to return a Service object for a given set of broadc
 	   Record record = application.getRecords().get(0);
 
 	   System.out.println(String.format("ApplicationId: %s Host: %s Port: %d Priority: %d Weight: %d",
-	        application.getApplicationId(), record.getName(), record.getPort(), record.getPriority(), record.getWeight()));
+	        application.getApplicationId(), record.getTarget(), record.getPort(), record.getPriority(), record.getWeight()));
 
 	} else {
 		System.out.println("No Results");
