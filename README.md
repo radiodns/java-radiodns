@@ -12,7 +12,7 @@ For more information about RadioDNS, please see the official documentation: [htt
 
 ### Installation
 
-Download and add radiodns-1.0.jar to your build path.
+Download and add [radiodns-1.0.jar](https://github.com/downloads/radiodns/java-radiodns/radiodns-1.0.jar) to your build path.
 
 The library depends on the [dnsjava](http://www.dnsjava.org/) library.
 
