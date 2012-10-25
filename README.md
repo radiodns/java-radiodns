@@ -22,10 +22,16 @@ The library depends on the [dnsjava](http://www.dnsjava.org/) library.
 Use the methods on RadioDNS to return a Service object for a given set of broadcast parameters. Use the Service obeject to resolve RadioDNS applications.
 
     RadioDNS rdns = new RadioDNS();
+    
     Service service = rdns.lookupFMService("ce1", "c479", 95800);
+
     Application application = service.getApplication(RadioDNS.RADIOVIS);
+
     if (application != null) {
+
     	Server server = application.getServers().get(0);
+
     	System.out.println(String.format("ApplicationId: %s Host: %s Port: %d Priority: %d Weight: %d",
-        application.getApplicationId(), server.getHostname(), server.getPort(), server.getPriority(), server.getWeight()));
+            application.getApplicationId(), server.getHostname(), server.getPort(), server.getPriority(), server.getWeight()));
+
     }
