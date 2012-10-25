@@ -27,11 +27,13 @@ Use the methods on RadioDNS to return a Service object for a given set of broadc
 
     Application application = service.getApplication(RadioDNS.RADIOVIS);
 
-    if (application != null) {
+	if (application != null) {
+	 
+	   Record record = application.getRecords().get(0);
 
-    	Server server = application.getServers().get(0);
+	   System.out.println(String.format("ApplicationId: %s Host: %s Port: %d Priority: %d Weight: %d",
+	        application.getApplicationId(), record.getName(), record.getPort(), record.getPriority(), record.getWeight()));
 
-    	System.out.println(String.format("ApplicationId: %s Host: %s Port: %d Priority: %d Weight: %d",
-            application.getApplicationId(), server.getHostname(), server.getPort(), server.getPriority(), server.getWeight()));
-
-    }
+	} else {
+		System.out.println("No Results");
+	}
