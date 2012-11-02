@@ -2,7 +2,7 @@ package org.radiodns;
 
 /**
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0
+ * @version 1.0.1
  */
 public class FMService extends Service {
 
@@ -75,6 +75,18 @@ public class FMService extends Service {
 			throw new LookupException(
 					"Invalid frequency value. Must be int between the values 76000 and 108000.");
 		}
+	}
+	
+	public String getCountry() {
+		return (mGcc != null) ? mGcc : mIso3166CountryCode;
+	}
+	
+	public String getPiCode() {
+		return mPi;
+	}
+	
+	public int getFrequency() {
+		return mFrequency;
 	}
 	
 	/*

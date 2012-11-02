@@ -16,6 +16,10 @@
 
 package org.radiodns;
 
+/**
+ * @author Byrion Smith <byrion.smith@thisisglobal.com>
+ * @version 1.0.1
+ */
 public class LookupException extends Exception {
 
 	private static final long serialVersionUID = 2415284683079683571L;

@@ -18,7 +18,7 @@ package org.radiodns;
 
 /**
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0
+ * @version 1.0.1
  */
 public class HDService extends Service {
 
@@ -65,6 +65,14 @@ public class HDService extends Service {
 			throw new LookupException(
 					"Invalid Transmitter Identifier (TX) value. Must be a valid 5-character hexadecimal.");
 		}
+	}
+	
+	public String getTx() {
+		return mTx;
+	}
+	
+	public String getCc() {
+		return mCc;
 	}
 
 	/*

@@ -18,7 +18,7 @@ package org.radiodns;
 
 /**
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0
+ * @version 1.0.1
  */
 public class DABService extends Service {
 
@@ -120,6 +120,30 @@ public class DABService extends Service {
 		
 		mXpad = null;
 		mPa = -1;
+	}
+	
+	public String getScids() {
+		return mScids;
+	}
+	
+	public String getSid() {
+		return mSid;
+	}
+	
+	public String getEid() {
+		return mEid;
+	}
+	
+	public String getGcc() {
+		return mGcc;
+	}
+	
+	public String getXpad() {
+		return mXpad;
+	}
+	
+	public int getPa() {
+		return mPa;
 	}
 
 	@Override

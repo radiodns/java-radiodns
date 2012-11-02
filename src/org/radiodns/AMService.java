@@ -18,7 +18,7 @@ package org.radiodns;
 
 /**
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0
+ * @version 1.0.1
  */
 public class AMService extends Service {
 
@@ -60,6 +60,14 @@ public class AMService extends Service {
 		}
 	}
 
+	public String getType() {
+		return mType;
+	}
+	
+	public String getSid() {
+		return mSid;
+	}
+	
 	/*
 	 * @see org.radiodns.Service#getRadioDNSFqdn()
 	 */
