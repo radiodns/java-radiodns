@@ -12,7 +12,7 @@ For more information about RadioDNS, please see the official documentation: [htt
 
 ### Installation
 
-Download and add [radiodns-1.0.jar](https://github.com/downloads/radiodns/java-radiodns/radiodns-1.0.jar) to your build path.
+Download [radiodns-1.0.2.jar](https://github.com/radiodns/java-radiodns/downloads) and add it to your project.
 
 The library depends on the [dnsjava](http://www.dnsjava.org/) library.
 
@@ -37,3 +37,9 @@ Use the methods on RadioDNS to return a Service object for a given set of broadc
 	} else {
 		System.out.println("No Results");
 	}
+
+### DNS Server
+
+You can override the default DNS server to query by specifying the hostname in the RadioDNS constructor.
+
+    RadioDNS rdns = new RadioDNS("8.8.8.8");
