@@ -2,7 +2,7 @@ package org.radiodns;
 
 /**
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class FMService extends Service {
 

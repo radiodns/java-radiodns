@@ -22,7 +22,7 @@ package org.radiodns;
  * applications.
  * 
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class RadioDNS {
 
@@ -32,6 +32,21 @@ public class RadioDNS {
 
 	static final String[] KNOWN_APPLICATIONS = { RADIOEPG, RADIOTAG, RADIOVIS };
 
+	String mDNSHostname;
+	
+	public RadioDNS() {
+		mDNSHostname = null;
+	}
+	
+	/**
+	 * Supply a DNS server hostname to query when performing lookups
+	 * 
+	 * @param hostname	DNS Server to query
+	 */
+	public RadioDNS(String hostname) {
+		mDNSHostname = hostname;
+	}
+	
 	/**
 	 * Lookup a Service based on FM broadcast parameters
 	 * 
@@ -43,7 +58,10 @@ public class RadioDNS {
 	 */
 	public Service lookupFMService(String country, String pi, int frequency)
 			throws LookupException {
-		return new FMService(country, pi, frequency);
+		Service s = new FMService(country, pi, frequency);
+		if (mDNSHostname != null)
+			s.setDNSHostname(mDNSHostname);
+		return s;
 	}
 
 	/**
@@ -59,7 +77,10 @@ public class RadioDNS {
 	 */
 	public Service lookupDABService(String gcc, String eid, String sid,
 			String scids, int pa) throws LookupException {
-		return new DABService(gcc, eid, sid, scids, pa);
+		Service s = new DABService(gcc, eid, sid, scids, pa);
+		if (mDNSHostname != null)
+			s.setDNSHostname(mDNSHostname);
+		return s;
 	}
 
 	/**
@@ -75,7 +96,10 @@ public class RadioDNS {
 	 */
 	public Service lookupDABService(String gcc, String eid, String sid,
 			String scids, String xpad) throws LookupException {
-		return new DABService(gcc, eid, sid, scids, xpad);
+		Service s = new DABService(gcc, eid, sid, scids, xpad);
+		if (mDNSHostname != null)
+			s.setDNSHostname(mDNSHostname);
+		return s;
 	}
 
 	/**
@@ -90,7 +114,10 @@ public class RadioDNS {
 	 */
 	public Service lookupDABService(String gcc, String eid, String sid,
 			String scids) throws LookupException {
-		return new DABService(gcc, eid, sid, scids);
+		Service s = new DABService(gcc, eid, sid, scids);
+		if (mDNSHostname != null)
+			s.setDNSHostname(mDNSHostname);
+		return s;
 	}
 
 	/**
@@ -103,7 +130,10 @@ public class RadioDNS {
 	 */
 	public Service lookupAMService(String type, String sid)
 			throws LookupException {
-		return new AMService(type, sid);
+		Service s = new AMService(type, sid);
+		if (mDNSHostname != null)
+			s.setDNSHostname(mDNSHostname);
+		return s;
 	}
 
 	/**
@@ -115,7 +145,10 @@ public class RadioDNS {
 	 * @throws LookupException
 	 */
 	public Service lookupHDService(String tx, String cc) throws LookupException {
-		return new HDService(tx, cc);
+		Service s = new HDService(tx, cc);
+		if (mDNSHostname != null)
+			s.setDNSHostname(mDNSHostname);
+		return s;
 	}
 
 	/**
@@ -128,6 +161,9 @@ public class RadioDNS {
 	 */
 	public Service lookupIPService(String authoritativeFqdn)
 			throws LookupException {
-		return new IPService(authoritativeFqdn);
+		Service s = new IPService(authoritativeFqdn);
+		if (mDNSHostname != null)
+			s.setDNSHostname(mDNSHostname);
+		return s;
 	}
 }

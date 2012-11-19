@@ -33,10 +33,12 @@ import org.xbill.DNS.Type;
  * Represents a Radio Service from which RadioDNS Applications can be resolved
  * 
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0.1
+ * @version 1.0.2
  */
 public abstract class Service {
 
+	String mDNSHostname = null;
+	
 	/**
 	 * Get RadioDNS FQDN
 	 * 
@@ -81,13 +83,22 @@ public abstract class Service {
 	}
 	
 	/**
+	 * Supply a DNS server hostname to query when performing lookups
+	 * 
+	 * @param hostname	DNS Server to query
+	 */
+	public void setDNSHostname(String hostname) {
+		mDNSHostname = hostname;
+	}
+	
+	/**
 	 * Get RadioVIS Application for the given Application ID
 	 * 
 	 * @param applicationId			RadioDNS Application Identifier
 	 * @return
 	 * @throws LookupException
 	 */
-	private Application resolveApplication(String applicationId)
+	Application resolveApplication(String applicationId)
 			throws LookupException {
 		return resolveApplication(applicationId, null);
 	}
@@ -121,7 +132,11 @@ public abstract class Service {
 
 		SimpleResolver resolver;
 		try {
-			resolver = new SimpleResolver();
+			if (mDNSHostname == null) {
+				resolver = new SimpleResolver();
+			} else {
+				resolver = new SimpleResolver(mDNSHostname);
+			}
 		} catch (UnknownHostException e) {
 			throw new LookupException("Error creating DNS Resolver", e);
 		}
@@ -157,7 +172,12 @@ public abstract class Service {
 	 */
 	String resolveAuthoritativeFQDN() throws LookupException {
 		try {
-			SimpleResolver resolver = new SimpleResolver();
+			SimpleResolver resolver;
+			if (mDNSHostname == null) {
+				resolver = new SimpleResolver();
+			} else {
+				resolver = new SimpleResolver(mDNSHostname);
+			}
 			Lookup lookup = new Lookup(getRadioDNSFqdn(), Type.CNAME);
 			lookup.setResolver(resolver);
 			org.xbill.DNS.Record[] records = lookup.run();
