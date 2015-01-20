@@ -33,7 +33,7 @@ import org.xbill.DNS.Type;
  * Represents a Radio Service from which RadioDNS Applications can be resolved
  * 
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0.2
+ * @version 1.0.3
  */
 public abstract class Service {
 

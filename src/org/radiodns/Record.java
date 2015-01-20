@@ -23,7 +23,7 @@ import org.xbill.DNS.SRVRecord;
  * Delegator of SRVRecord
  * 
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0.2
+ * @version 1.0.3
  * @see org.xbill.DNS.SRVRecord
  */
 public class Record {

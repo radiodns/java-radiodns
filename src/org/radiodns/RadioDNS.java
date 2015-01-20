@@ -22,7 +22,7 @@ package org.radiodns;
  * applications.
  * 
  * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0.2
+ * @version 1.0.3
  */
 public class RadioDNS {
 
