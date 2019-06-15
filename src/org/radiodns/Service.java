@@ -16,18 +16,16 @@
 
 package org.radiodns;
 
-import java.net.UnknownHostException;
+import org.minidns.hla.DnssecResolverApi;
+import org.minidns.hla.ResolverResult;
+import org.minidns.record.CNAME;
+import org.minidns.record.SRV;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
-import org.xbill.DNS.CNAMERecord;
-import org.xbill.DNS.Lookup;
-import org.xbill.DNS.SRVRecord;
-import org.xbill.DNS.SimpleResolver;
-import org.xbill.DNS.TextParseException;
-import org.xbill.DNS.Type;
+import java.util.Set;
 
 /**
  * Represents a Radio Service from which RadioDNS Applications can be resolved
@@ -50,9 +48,8 @@ public abstract class Service {
 	 * Get Authoritative FQDN
 	 * 
 	 * @return		Authoritative FQDN
-	 * @throws LookupException 
 	 */
-	public String getAuthoritativeFqdn() throws LookupException {
+	public String getAuthoritativeFqdn() {
 		return resolveAuthoritativeFQDN();
 	}
 
@@ -61,10 +58,8 @@ public abstract class Service {
 	 * 
 	 * @param applicationId		RadioDNS Application Identifier
 	 * @return		RadioDNS Application
-	 * @throws LookupException
 	 */
-	public Application getApplication(String applicationId)
-			throws LookupException {
+	public Application getApplication(String applicationId) {
 		return resolveApplication(applicationId);
 	}
 
@@ -72,7 +67,6 @@ public abstract class Service {
 	 * Get all known RadioDNS Applications
 	 * 
 	 * @return		Map of RadioDNS Applications
-	 * @throws LookupException
 	 */
 	public Map<String, Application> getApplications() throws LookupException {
 		Map<String, Application> applications = new HashMap<String, Application>();
@@ -96,10 +90,8 @@ public abstract class Service {
 	 * 
 	 * @param applicationId			RadioDNS Application Identifier
 	 * @return
-	 * @throws LookupException
 	 */
-	Application resolveApplication(String applicationId)
-			throws LookupException {
+	Application resolveApplication(String applicationId) {
 		return resolveApplication(applicationId, null);
 	}
 	
@@ -110,10 +102,9 @@ public abstract class Service {
 	 * @param applicationId			RadioDNS Application Identifier
 	 * @param transportProtocol		Transport Protocol
 	 * @return
-	 * @throws LookupException
 	 */
 	Application resolveApplication(String applicationId,
-			String transportProtocol) throws LookupException {
+			String transportProtocol) {
 		String authoritativeFqdn = getAuthoritativeFqdn();
 		if (applicationId == null) {
 			throw new IllegalArgumentException("Application ID is null");
@@ -130,70 +121,61 @@ public abstract class Service {
 				applicationId.toLowerCase(), transportProtocol.toLowerCase(),
 				authoritativeFqdn);
 
-		SimpleResolver resolver;
-		try {
-			if (mDNSHostname == null) {
-				resolver = new SimpleResolver();
-			} else {
-				resolver = new SimpleResolver(mDNSHostname);
-			}
-		} catch (UnknownHostException e) {
-			throw new LookupException("Error creating DNS Resolver", e);
-		}
 
-		Lookup lookup;
 		try {
-			lookup = new Lookup(applicationFqdn, Type.SRV);
-		} catch (TextParseException e) {
-			throw new LookupException("Error parsing DNS response", e);
-		}
-		lookup.setResolver(resolver);
-		org.xbill.DNS.Record[] records = lookup.run();
+			ResolverResult<SRV> result = DnssecResolverApi.INSTANCE.resolve(applicationFqdn, SRV.class);
 
-		if (records != null) {
-			List<Record> servers = new ArrayList<Record>();
-			for (org.xbill.DNS.Record r : records) {
-				if (r.getType() == Type.SRV) {
-					servers.add(new Record((SRVRecord) r));
-				}
+			if (!result.wasSuccessful()) {
+				//error
+				return null;
 			}
 
-			return new Application(applicationId.toLowerCase(), servers);
-		}
+			if (result.isAuthenticData()) {
+				return null;
+			}
 
-		return null;
+			Set<SRV> srvs = result.getAnswers();
+			ArrayList<Record> records = new ArrayList<>();
+			for (SRV srv : srvs) {
+				records.add(new Record(srv));
+			}
+			return new Application(applicationId, records);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
+
 	/**
 	 * Resolve Authoritative FQDN for the service
 	 * 
 	 * @return			Authoritative FQDN String
-	 * @throws LookupException
 	 */
-	String resolveAuthoritativeFQDN() throws LookupException {
+	public String resolveAuthoritativeFQDN() {
 		try {
-			SimpleResolver resolver;
-			if (mDNSHostname == null) {
-				resolver = new SimpleResolver();
-			} else {
-				resolver = new SimpleResolver(mDNSHostname);
-			}
-			Lookup lookup = new Lookup(getRadioDNSFqdn(), Type.CNAME);
-			lookup.setResolver(resolver);
-			org.xbill.DNS.Record[] records = lookup.run();
+			ResolverResult<CNAME> result = DnssecResolverApi.INSTANCE.resolve(getRadioDNSFqdn(), CNAME.class);
 
-			if (records != null) {
-				for (org.xbill.DNS.Record record : records) {
-					if (record.getType() == Type.CNAME) {
-						return ((CNAMERecord) record).getTarget().toString();
-					}
-				}
+			if (!result.wasSuccessful()) {
+				//error
+				return null;
 			}
-		} catch (UnknownHostException e) {
-			throw new LookupException("Error creating DNS Resolver", e);
-		} catch (TextParseException e) {
-			throw new LookupException("Error parsing DNS response", e);
+
+			if (result.isAuthenticData()) {
+				return null;
+			}
+
+			Set<CNAME> cnames = result.getAnswers();
+			if (cnames.size() > 0) {
+				CNAME cname = cnames.iterator().next();
+				return cname.target.toString();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
 		}
+
 
 		return null;
 	}
