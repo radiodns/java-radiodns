@@ -45,7 +45,7 @@ public class IPService extends Service {
 	 * @see org.radiodns.Service#getAuthoritativeFqdn()
 	 */
 	@Override
-	public String getAuthoritativeFqdn() throws LookupException {
+	public String getAuthoritativeFqdn() {
 		return mAuthoritativeFqdn;
 	}
 }

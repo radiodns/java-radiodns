@@ -16,125 +16,88 @@
 
 package org.radiodns;
 
-import org.xbill.DNS.Name;
-import org.xbill.DNS.SRVRecord;
+import org.minidns.dnsname.DnsName;
+import org.minidns.record.Record.TYPE;
+import org.minidns.record.SRV;
 
 /**
- * Delegator of SRVRecord
+ * Delegator of SRV
  * 
- * @author Byrion Smith <byrion.smith@thisisglobal.com>
- * @version 1.0.3
- * @see org.xbill.DNS.SRVRecord
+ * @author Jake Chandrasakera
+ * @version 2.0.0
+ * @see org.minidns.record.SRV
  */
 public class Record {
 
-	private SRVRecord mRecord;
-	
-	public Record(SRVRecord record) {
+	private SRV mRecord;
+
+	public Record(SRV record) {
 		mRecord = record;
 	}
 
 	/**
 	 * @param arg0
 	 * @return
-	 * @see org.xbill.DNS.Record#compareTo(java.lang.Object)
 	 */
-	public int compareTo(Object arg0) {
+	public int compareTo(SRV arg0) {
 		return mRecord.compareTo(arg0);
 	}
 
 	/**
 	 * @param arg
 	 * @return
-	 * @see org.xbill.DNS.Record#equals(java.lang.Object)
 	 */
-	public boolean equals(Object arg) {
+	public boolean equals(SRV arg) {
 		return mRecord.equals(arg);
 	}
 
 	/**
-	 * @return
-	 * @see org.xbill.DNS.SRVRecord#getAdditionalName()
+	 * The target server.
+	 *
+	 * @deprecated use {@link #getTarget()} instead.
 	 */
-	public Name getAdditionalName() {
-		return mRecord.getAdditionalName();
+	@Deprecated
+	public DnsName getName() {
+		return mRecord.name;
 	}
 
 	/**
 	 * @return
-	 * @see org.xbill.DNS.Record#getDClass()
-	 */
-	public int getDClass() {
-		return mRecord.getDClass();
-	}
-
-	/**
-	 * @return
-	 * @see org.xbill.DNS.Record#getName()
-	 */
-	public Name getName() {
-		return mRecord.getName();
-	}
-
-	/**
-	 * @return
-	 * @see org.xbill.DNS.SRVRecord#getPort()
 	 */
 	public int getPort() {
-		return mRecord.getPort();
+		return mRecord.port;
 	}
 
 	/**
 	 * @return
-	 * @see org.xbill.DNS.SRVRecord#getPriority()
 	 */
 	public int getPriority() {
-		return mRecord.getPriority();
+		return mRecord.priority;
 	}
 
 	/**
 	 * @return
-	 * @see org.xbill.DNS.Record#getRRsetType()
 	 */
-	public int getRRsetType() {
-		return mRecord.getRRsetType();
+	public DnsName getTarget() {
+		return mRecord.target;
 	}
 
 	/**
 	 * @return
-	 * @see org.xbill.DNS.Record#getTTL()
 	 */
-	public long getTTL() {
-		return mRecord.getTTL();
-	}
-
-	/**
-	 * @return
-	 * @see org.xbill.DNS.SRVRecord#getTarget()
-	 */
-	public Name getTarget() {
-		return mRecord.getTarget();
-	}
-
-	/**
-	 * @return
-	 * @see org.xbill.DNS.Record#getType()
-	 */
-	public int getType() {
+	public TYPE getType() {
 		return mRecord.getType();
 	}
 
 	/**
 	 * @return
-	 * @see org.xbill.DNS.SRVRecord#getWeight()
 	 */
 	public int getWeight() {
-		return mRecord.getWeight();
+		return mRecord.weight;
 	}
 
 	/**
 	 * @return
-	 * @see org.xbill.DNS.Record#hashCode()
 	 */
 	public int hashCode() {
 		return mRecord.hashCode();
@@ -142,61 +105,8 @@ public class Record {
 
 	/**
 	 * @return
-	 * @see org.xbill.DNS.Record#rdataToString()
-	 */
-	public String rdataToString() {
-		return mRecord.rdataToString();
-	}
-
-	/**
-	 * @return
-	 * @see org.xbill.DNS.Record#rdataToWireCanonical()
-	 */
-	public byte[] rdataToWireCanonical() {
-		return mRecord.rdataToWireCanonical();
-	}
-
-	/**
-	 * @param rec
-	 * @return
-	 * @see org.xbill.DNS.Record#sameRRset(org.xbill.DNS.Record)
-	 */
-	public boolean sameRRset(org.xbill.DNS.Record rec) {
-		return mRecord.sameRRset(rec);
-	}
-
-	/**
-	 * @return
-	 * @see org.xbill.DNS.Record#toString()
 	 */
 	public String toString() {
 		return mRecord.toString();
 	}
-
-	/**
-	 * @param section
-	 * @return
-	 * @see org.xbill.DNS.Record#toWire(int)
-	 */
-	public byte[] toWire(int section) {
-		return mRecord.toWire(section);
-	}
-
-	/**
-	 * @return
-	 * @see org.xbill.DNS.Record#toWireCanonical()
-	 */
-	public byte[] toWireCanonical() {
-		return mRecord.toWireCanonical();
-	}
-
-	/**
-	 * @param name
-	 * @return
-	 * @see org.xbill.DNS.Record#withName(org.xbill.DNS.Name)
-	 */
-	public org.xbill.DNS.Record withName(Name name) {
-		return mRecord.withName(name);
-	}
-	
 }
