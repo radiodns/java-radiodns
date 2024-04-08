@@ -27,11 +27,12 @@ package org.radiodns;
 public class RadioDNS {
 
 	public static final String RADIOEPG = "radioepg";
+	public static final String RADIOEPG = "radiospi";
 	public static final String RADIOTAG = "radiotag";
 	public static final String RADIOVIS = "radiovis";
 	public static final String RADIOVIS_HTTP = "radiovis-http";
 
-	static final String[] KNOWN_APPLICATIONS = { RADIOEPG, RADIOTAG, RADIOVIS, RADIOVIS_HTTP };
+	static final String[] KNOWN_APPLICATIONS = { RADIOEPG, RADIOSPI, RADIOTAG, RADIOVIS, RADIOVIS_HTTP };
 
 	String mDNSHostname;
 	

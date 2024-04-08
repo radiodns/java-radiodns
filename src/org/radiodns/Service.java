@@ -86,7 +86,7 @@ public abstract class Service {
 	}
 	
 	/**
-	 * Get RadioVIS Application for the given Application ID
+	 * Get RadioDNS Application for the given Application ID
 	 * 
 	 * @param applicationId			RadioDNS Application Identifier
 	 * @return
@@ -96,7 +96,7 @@ public abstract class Service {
 	}
 	
 	/**
-	 * Get RadioVIS Application for the given Application ID and Transport 
+	 * Get RadioDNS Application for the given Application ID and Transport 
 	 * Protocol 
 	 * 
 	 * @param applicationId			RadioDNS Application Identifier
