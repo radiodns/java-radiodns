@@ -12,9 +12,9 @@ For more information about RadioDNS, please see the official documentation: [htt
 
 ### Installation
 
-Download [radiodns-1.0.4.jar](https://github.com/radiodns/java-radiodns/releases) from the releases page and add it to your project.
+Download [radiodns-1.0.3.jar](https://github.com/radiodns/java-radiodns/releases) from the releases page and add it to your project.
 
-The library depends on the [dnsjava](http://www.dnsjava.org/) library.
+The library depends on the [minidns](https://github.com/MiniDNS/minidns) library. (Earlier versions used [dnsjava](https://github.com/dnsjava/dnsjava))
 
 
 ### Getting Started
